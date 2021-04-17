@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using MySql.Data;
+using MySql.Data.MySqlClient;
+using System.Diagnostics;
 
 namespace Kreta_kopi.pages
 {
@@ -19,10 +22,36 @@ namespace Kreta_kopi.pages
 
         public void submitButton_Click(Object sender, EventArgs e)
         {
-            if(passwordField.Value == "12345" && usernameField.Value == "admin")
+            bool valid_login = false;
+            string connStr = "server=localhost;user=root;database=Osztalynaplo;port=3306;password=";
+            MySqlConnection conn = new MySqlConnection(connStr);
+            try
+            {
+                conn.Open();
+                string sql = "SELECT felhasznalonev, jelszo FROM felhasznalok WHERE felhasznalonev='" + usernameField.Value + "'";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                MySqlDataReader rdr = cmd.ExecuteReader();
+
+                while (rdr.Read())
+                {
+                    if (passwordField.Value == rdr[1].ToString())
+                    {
+                        valid_login = true;
+                        break;
+                    }
+                }
+                rdr.Close();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
+            conn.Close();
+
+            if (valid_login)
             {
                 Session["auth_user"] = true;
-                HttpContext.Current.Response.Redirect("http://www.google.com");
+                HttpContext.Current.Response.Redirect("dashboard.aspx");
             } else
             {
                 Response.Redirect(Request.RawUrl);
