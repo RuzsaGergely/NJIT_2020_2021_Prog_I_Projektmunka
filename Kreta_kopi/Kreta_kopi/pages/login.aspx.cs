@@ -16,7 +16,7 @@ namespace Kreta_kopi.pages
         {
             if (!Session.IsNewSession && Session["auth_user"] != null)
             {
-                HttpContext.Current.Response.Redirect("http://www.google.com");
+                HttpContext.Current.Response.Redirect("dashboard.aspx");
             }
         }
 

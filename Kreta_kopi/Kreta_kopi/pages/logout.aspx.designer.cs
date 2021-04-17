@@ -11,7 +11,7 @@ namespace Kreta_kopi.pages
 {
 
 
-    public partial class dashboard
+    public partial class logout
     {
     }
 }

@@ -7,14 +7,12 @@ using System.Web.UI.WebControls;
 
 namespace Kreta_kopi.pages
 {
-    public partial class dashboard : System.Web.UI.Page
+    public partial class logout : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session.IsNewSession || Session["auth_user"] == null)
-            {
-                HttpContext.Current.Response.Redirect("login.aspx");
-            }
+            Session.Abandon();
+            HttpContext.Current.Response.Redirect("login.aspx");
         }
     }
 }
