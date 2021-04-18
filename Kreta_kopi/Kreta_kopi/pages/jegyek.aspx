@@ -1,11 +1,11 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="dashboard.aspx.cs" Inherits="Kreta_kopi.pages.dashboard" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="jegyek.aspx.cs" Inherits="Kreta_kopi.pages.jegyek" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta name="viewport" content="width=device-width" />
-    <title>Kréta kopi - Dashboard</title>
+    <title>Kréta kopi - Jegyek</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous"/>
 </head>
 <body>
@@ -38,13 +38,10 @@
     </nav>
     <div style="margin-left: 10%; margin-right: 10%; margin-top:2%;">
         <div class="card">
-            <div class="card-body">
-                <%
-                    for (int i = 0; i < 10; i++)
-                    {
-                        Response.Write("<p>" + i + "</p>");
-                    }
-                    %>
+            <div class="card-body">         
+                <select id="diak_lista" runat="server">
+                    
+                </select>
             </div>
         </div>
     </div>

@@ -133,6 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="pages\dashboard.aspx" />
+    <Content Include="pages\jegyek.aspx" />
     <Content Include="pages\login.aspx" />
     <Content Include="pages\logout.aspx" />
     <Content Include="Web.config" />
@@ -144,6 +145,13 @@
     </Compile>
     <Compile Include="pages\dashboard.aspx.designer.cs">
       <DependentUpon>dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pages\jegyek.aspx.cs">
+      <DependentUpon>jegyek.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\jegyek.aspx.designer.cs">
+      <DependentUpon>jegyek.aspx</DependentUpon>
     </Compile>
     <Compile Include="pages\login.aspx.cs">
       <DependentUpon>login.aspx</DependentUpon>
