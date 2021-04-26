@@ -24,3 +24,15 @@ if($_GET["login"] && $_SERVER["REQUEST_METHOD"] == "POST"){
         header("location: index.php");
     }
 }
+
+if($_GET["delete_grade"] && isset($_GET["grade_id"]) && $_SERVER["REQUEST_METHOD"] == "GET"){
+    $stmt = $conn->prepare("DELETE FROM `jegyek` WHERE `id`=?");
+    $stmt->bind_param('s', $_GET["grade_id"]);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    header("location: jegyek.php?student_selector=".$_GET["redirect_stud"]);
+}
+
+if($_GET["modify_grade"] && $_SERVER["REQUEST_METHOD"] == "POST"){
+
+}

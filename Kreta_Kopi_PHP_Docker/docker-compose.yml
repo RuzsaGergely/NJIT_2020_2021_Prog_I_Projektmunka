@@ -2,7 +2,7 @@ version: '2'
 
 services: 
     apache:
-        image: 'neu-mozdulj:v1.0'
+        image: 'kretakopi:latest'
         restart: always
         volumes: 
             - './site/:/var/www/html'
