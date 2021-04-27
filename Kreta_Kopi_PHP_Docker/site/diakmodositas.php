@@ -4,19 +4,19 @@ if(!isset($_SESSION["logged-in"]) || !$_SESSION["logged-in"]){
     header("location: index.php");
 }
 include 'database.php';
-if($_GET["modify_grade"] && isset($_GET["grade_id"]) && $_SERVER["REQUEST_METHOD"] == "GET"){
-    $stmt = $conn->prepare("SELECT * FROM `jegyek` WHERE `id`=?");
-    $stmt->bind_param("s", $_GET["grade_id"]);
+if($_GET["modify_student"] && isset($_GET["student_id"]) && $_SERVER["REQUEST_METHOD"] == "GET"){
+    $stmt = $conn->prepare("SELECT * FROM `diakok` WHERE `id`=?");
+    $stmt->bind_param("s", $_GET["student_id"]);
     $stmt->execute();
     $result = $stmt->get_result();
-    $grade_data = Array();
+    $student_data = Array();
     while($row = $result->fetch_assoc()) {
-        $grade_data[0] = $row["id"];
-        $grade_data[1] = $row["jegy"];
-        $grade_data[2] = $row["szazalek"];
+        $student_data[0] = $row["id"];
+        $student_data[1] = $row["nev"];
+        $student_data[2] = $row["fakultacio"];
     }
 } else {
-    header("location: jegyek.php");
+    header("location: diakok.php");
 }
 ?>
 <!doctype html>
@@ -35,26 +35,18 @@ if($_GET["modify_grade"] && isset($_GET["grade_id"]) && $_SERVER["REQUEST_METHOD
         <span class="navbar-brand mb-0 h1">Kréta Kopi</span>
     </div>
 </nav>
-<form action="action.php?modify_grade=true&redirect_stud=<?php echo $_GET["redirect_stud"] . "&grade_id=".$_GET["grade_id"];?>" method="post">
+<form action="action.php?modify_student=true&student_id=<?php echo $student_data[0];?>" method="post">
     <div class="row g-3 align-items-center mt-3 ms-3">
         <div class="col-auto">
-            <select name="grade_select" id="grade_select" class="form-select">
-            <?php
-                $grades = Array(1,2,3,4,5);
-                foreach ($grades as $selection) {
-                    $selected = ($grade_data[1] == $selection) ? "selected" : "";
-                    echo '<option '.$selected.' value="'.$selection.'">'.$selection.'</option>';
-                }
-            ?>
-            </select>
+            <input type="text" class="form-control" id="modstudent_name" name="modstudent_name" placeholder="Minta Áron" value="<?php echo $student_data[1];?>">
         </div>
         <div class="col-auto">
-            <select name="percent_select" id="percent_select" class="form-select">
+            <select name="modstudent_class" id="modstudent_class" class="form-select">
                 <?php
-                $grades = Array(50,100,150,200);
+                $grades = Array("hálózatok I.", "Hálózatok I. - gyakorlat", "Irodai informatika", "Irodai informatika - gyakorlat", "Linux alapok", "Linux alapok - gyakorlat", "Programozás", "Programozás - gyakorlat");
                 foreach ($grades as $selection) {
-                    $selected = ($grade_data[2] == $selection) ? "selected" : "";
-                    echo '<option '.$selected.' value="'.$selection.'">'.$selection.'%</option>';
+                    $selected = ($student_data[2] == $selection) ? "selected" : "";
+                    echo '<option '.$selected.' value="'.$selection.'">'.$selection.'</option>';
                 }
                 ?>
             </select>

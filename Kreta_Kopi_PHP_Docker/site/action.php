@@ -1,6 +1,9 @@
 <?php
 session_start();
 include 'database.php';
+if(!isset($_SESSION["logged-in"]) || !$_SESSION["logged-in"]){
+    header("location: index.php");
+}
 
 if($_GET["login"] && $_SERVER["REQUEST_METHOD"] == "POST"){
     $stmt = $conn->prepare("SELECT * FROM `felhasznalok` WHERE `felhasznalonev`=?");
@@ -49,5 +52,58 @@ if($_GET["add_grade"] && $_SERVER["REQUEST_METHOD"] == "POST"){
         $result = $stmt->get_result();
     }
     header("location: jegyek.php?student_selector=".$_GET["redirect_stud"]);
+}
 
+if($_GET["delete_student"] && isset($_GET["student_id"]) && $_SERVER["REQUEST_METHOD"] == "GET"){
+    $stmt = $conn->prepare("DELETE FROM `diakok` WHERE `id`=?");
+    $stmt->bind_param('s', $_GET["student_id"]);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    header("location: diakok.php");
+}
+
+if($_GET["add_student"] && $_SERVER["REQUEST_METHOD"] == "POST"){
+    if(!empty($_POST["newstudent_name"]) && !empty($_POST["newstudent_class"])){
+        $stmt = $conn->prepare("INSERT INTO `diakok` (`nev`, `fakultacio`) VALUES (?,?)");
+        $stmt->bind_param('ss', $_POST["newstudent_name"], $_POST["newstudent_class"]);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    }
+    header("location: diakok.php");
+}
+
+if($_GET["modify_student"] && $_SERVER["REQUEST_METHOD"] == "POST"){
+    $stmt = $conn->prepare("UPDATE `diakok` SET `nev`=?,`fakultacio`=? WHERE `id`=?");
+    $stmt->bind_param('sss', $_POST["modstudent_name"],$_POST["modstudent_class"], $_GET["student_id"]);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    header("location: diakok.php");
+}
+
+if($_GET["add_admin"] && $_SERVER["REQUEST_METHOD"] == "POST"){
+    if(!empty($_POST["newadmin_name"]) && !empty($_POST["newadmin_pass"])){
+        $stmt = $conn->prepare("INSERT INTO `felhasznalok` (`felhasznalonev`, `jelszo`) VALUES (?,?)");
+        $password = password_hash($_POST["newadmin_pass"], PASSWORD_DEFAULT);
+        $stmt->bind_param('ss', $_POST["newadmin_name"], $password);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    }
+    header("location: admin.php");
+}
+
+if($_GET["delete_admin"] && isset($_GET["id"]) && $_SERVER["REQUEST_METHOD"] == "GET"){
+    $stmt = $conn->prepare("DELETE FROM `felhasznalok` WHERE `id`=?");
+    $stmt->bind_param('s', $_GET["id"]);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    header("location: admin.php");
+}
+
+if($_GET["modify_admin"] && $_SERVER["REQUEST_METHOD"] == "POST"){
+    $stmt = $conn->prepare("UPDATE `felhasznalok` SET `jelszo`=? WHERE `id`=?");
+    $pass =password_hash($_POST["admin_newpass"], PASSWORD_DEFAULT);
+    $stmt->bind_param('ss', $pass, $_GET["id"]);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    header("location: admin.php");
 }
