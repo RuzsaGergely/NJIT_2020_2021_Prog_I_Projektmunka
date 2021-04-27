@@ -34,5 +34,20 @@ if($_GET["delete_grade"] && isset($_GET["grade_id"]) && $_SERVER["REQUEST_METHOD
 }
 
 if($_GET["modify_grade"] && $_SERVER["REQUEST_METHOD"] == "POST"){
+    $stmt = $conn->prepare("UPDATE `jegyek` SET `jegy`=?,`szazalek`=? WHERE `id`=?");
+    $stmt->bind_param('sss', $_POST["grade_select"],$_POST["percent_select"], $_GET["grade_id"]);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    header("location: jegyek.php?student_selector=".$_GET["redirect_stud"]);
+}
+
+if($_GET["add_grade"] && $_SERVER["REQUEST_METHOD"] == "POST"){
+    if($_POST["grade_select"] > 0 && $_POST["percent_select"] > 0){
+        $stmt = $conn->prepare("INSERT INTO `jegyek`(`diak_id`, `jegy`, `szazalek`) VALUES (?,?,?)");
+        $stmt->bind_param('sss', $_GET["redirect_stud"], $_POST["grade_select"],$_POST["percent_select"]);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    }
+    header("location: jegyek.php?student_selector=".$_GET["redirect_stud"]);
 
 }
