@@ -110,10 +110,10 @@ HTML;
                 while($row = $result->fetch_assoc()) {
                     $html = $html . <<<HTML
                     <tr>
-                        <th scope="row">{$row["id"]}</th>
-                        <td>{$row["jegy"]}</td>
-                        <td>{$row["szazalek"]}%</td>
-                        <td><button class="btn btn-danger" onclick="javascript:window.location.href ='action.php?delete_grade=true&grade_id={$row["id"]}&redirect_stud={$_GET["student_selector"]}'">Törlés</button><button class="btn btn-warning ms-3" onclick="javascript:window.location.href ='jegymodositas.php?modify_grade=true&grade_id={$row["id"]}&redirect_stud={$_GET["student_selector"]}'">Módosítás</button></td>
+                        <th class="align-middle" scope="row">{$row["id"]}</th>
+                        <td class="align-middle">{$row["jegy"]}</td>
+                        <td class="align-middle">{$row["szazalek"]}%</td>
+                        <td class="align-middle"><button class="btn btn-danger" onclick="javascript:window.location.href ='action.php?delete_grade=true&grade_id={$row["id"]}&redirect_stud={$_GET["student_selector"]}'">Törlés</button><button class="btn btn-warning ms-3" onclick="javascript:window.location.href ='jegymodositas.php?modify_grade=true&grade_id={$row["id"]}&redirect_stud={$_GET["student_selector"]}'">Módosítás</button></td>
                     </tr>
 HTML;
                 }

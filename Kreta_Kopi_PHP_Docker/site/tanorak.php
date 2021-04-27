@@ -14,7 +14,7 @@ include 'database.php';
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Kréta Kopi - Diákok</title>
+    <title>Kréta Kopi - Tanórák</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 </head>
 <body>
@@ -30,13 +30,13 @@ include 'database.php';
                     <a class="nav-link" href="dashboard.php">Főoldal</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="diakok.php">Diákok</a>
+                    <a class="nav-link" href="diakok.php">Diákok</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="jegyek.php">Jegyek</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="tanorak.php">Tanórák</a>
+                    <a class="nav-link active" href="tanorak.php">Tanórák</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="admin.php">Admin</a>
@@ -55,15 +55,18 @@ include 'database.php';
                 <thead>
                 <tr>
                     <th scope="col">Azon.</th>
-                    <th scope="col">Név</th>
+                    <th scope="col">Dátum</th>
                     <th scope="col">Fakultáció</th>
+                    <th scope="col">Tanóra anyaga</th>
+                    <th scope="col">Szaktanár</th>
                     <th scope="col">Műveletek</th>
+
                 </tr>
                 </thead>
                 <tbody>
 
                 <?php
-                $stmt = $conn->prepare("SELECT * FROM `diakok`");
+                $stmt = $conn->prepare("SELECT * FROM `tanorak`");
                 $stmt->execute();
                 $result = $stmt->get_result();
                 $html = "";
@@ -71,9 +74,11 @@ include 'database.php';
                     $html = $html . <<<HTML
                     <tr>
                         <th class="align-middle" scope="row">{$row["id"]}</th>
-                        <td class="align-middle">{$row["nev"]}</td>
+                        <td class="align-middle">{$row["datum"]} - {$row["nap"]}</td>
                         <td class="align-middle">{$row["fakultacio"]}</td>
-                        <td class="align-middle"><button class="btn btn-danger" onclick="javascript:window.location.href ='action.php?delete_student=true&student_id={$row["id"]}'">Törlés</button><button class="btn btn-warning ms-3" onclick="javascript:window.location.href ='diakmodositas.php?modify_student=true&student_id={$row["id"]}'">Módosítás</button></td>
+                        <td class="align-middle">{$row["tanora_anyaga"]}</td>
+                        <td class="align-middle">{$row["szaktanar"]}</td>
+                        <td class="align-middle"><button class="btn btn-danger" onclick="javascript:window.location.href ='action.php?delete_student=true&student_id={$row["id"]}'">Törlés</button><br><button class="btn btn-warning mt-2" onclick="javascript:window.location.href ='diakmodositas.php?modify_student=true&student_id={$row["id"]}'">Módosítás</button></td>
                     </tr>
 HTML;
                 }

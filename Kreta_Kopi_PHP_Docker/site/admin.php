@@ -69,9 +69,9 @@ include 'database.php';
                 while($row = $result->fetch_assoc()) {
                     $html = $html . <<<HTML
                     <tr>
-                        <th scope="row">{$row["id"]}</th>
-                        <td>{$row["felhasznalonev"]}</td>
-                        <td><button class="btn btn-danger" onclick="javascript:window.location.href ='action.php?delete_admin=true&id={$row["id"]}'">Törlés</button><button class="btn btn-warning ms-3" onclick="javascript:window.location.href ='adminjelszo.php?id={$row["id"]}'">Jelszócsere</button></td>
+                        <th class="align-middle" scope="row">{$row["id"]}</th>
+                        <td class="align-middle">{$row["felhasznalonev"]}</td>
+                        <td class="align-middle"><button class="btn btn-danger" onclick="javascript:window.location.href ='action.php?delete_admin=true&id={$row["id"]}'">Törlés</button><button class="btn btn-warning ms-3" onclick="javascript:window.location.href ='adminjelszo.php?id={$row["id"]}'">Jelszócsere</button></td>
                     </tr>
 HTML;
                 }
