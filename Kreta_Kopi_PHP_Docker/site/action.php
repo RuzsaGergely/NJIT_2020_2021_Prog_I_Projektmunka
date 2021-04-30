@@ -107,3 +107,50 @@ if($_GET["modify_admin"] && $_SERVER["REQUEST_METHOD"] == "POST"){
     $result = $stmt->get_result();
     header("location: admin.php");
 }
+
+if($_GET["delete_class"] && isset($_GET["class_id"]) && $_SERVER["REQUEST_METHOD"] == "GET"){
+    $stmt = $conn->prepare("DELETE FROM `tanorak` WHERE `id`=?");
+    $stmt->bind_param('s', $_GET["class_id"]);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    header("location: tanorak.php");
+}
+
+if($_GET["modify_class"] && isset($_GET["id"]) && $_SERVER["REQUEST_METHOD"] == "POST"){
+    if(!empty($_POST["modifyclass_subject"]) && !empty($_POST["modifyclass_class"]) && !empty($_POST["modifyclass_teacher"]) && !empty($_POST["modifyclass_date"])){
+        $stmt = $conn->prepare("UPDATE `tanorak` SET `datum`=?,`nap`=?,`fakultacio`=?,`tanora_anyaga`=?,`szaktanar`= ? WHERE `id`=?");
+        $days_hun = Array(
+            "Mon" => "Hétfő",
+            "Tue" => "Kedd",
+            "Wed" => "Szerda",
+            "Thu" => "Csütörtök",
+            "Fri" => "Péntek",
+            "Sat" => "Szombat",
+            "Sun" => "Vasárnap"
+        );
+        $date_of = str_replace(".", "", str_replace(". ", "-", $_POST["modifyclass_date"]));
+        $stmt->bind_param('ssssss', $date_of, $days_hun[date('D', strtotime($date_of))], $_POST["modifyclass_class"], $_POST["modifyclass_subject"], $_POST["modifyclass_teacher"], $_GET["id"]);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    }
+    header("location: tanorak.php");
+}
+
+if($_GET["add_class"] && $_SERVER["REQUEST_METHOD"] == "POST"){
+    if(!empty($_POST["newclass_subject"]) && !empty($_POST["newclass_class"]) && !empty($_POST["newclass_teacher"]) && !empty($_POST["newclass_date"])){
+        $stmt = $conn->prepare("INSERT INTO `tanorak`(`datum`, `nap`, `fakultacio`, `tanora_anyaga`, `szaktanar`) VALUES (?,?,?,?,?)");
+        $days_hun = Array(
+            "Mon" => "Hétfő",
+            "Tue" => "Kedd",
+            "Wen" => "Szerda",
+            "Thu" => "Csütörtök",
+            "Fri" => "Péntek",
+            "Sat" => "Szombat",
+            "Sun" => "Vasárnap"
+        );
+        $stmt->bind_param('sssss', $_POST["newclass_date"], $days_hun[date('D', strtotime($_POST["newclass_date"]))], $_POST["newclass_class"], $_POST["newclass_subject"], $_POST["newclass_teacher"]);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    }
+    header("location: tanorak.php");
+}

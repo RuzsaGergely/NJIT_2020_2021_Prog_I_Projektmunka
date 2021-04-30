@@ -50,6 +50,29 @@ include 'database.php';
 </nav>
 <div class="card mt-3">
     <div class="card-body">
+        <b>Diákok kezelése</b>
+        <form action="action.php?add_student=true" method="post" class="mb-4">
+            <div class="row g-3 align-items-center mt-3 ms-3">
+                <div class="col-auto">
+                    <input type="text" class="form-control" id="newstudent_name" name="newstudent_name" placeholder="Minta Áron">
+                </div>
+                <div class="col-auto">
+                    <select name="newstudent_class" id="newstudent_class" class="form-select">
+                        <option value="hálózatok I.">hálózatok I.</option>
+                        <option value="Hálózatok I. - gyakorlat">Hálózatok I. - gyakorlat</option>
+                        <option value="Irodai informatika">Irodai informatika</option>
+                        <option value="Irodai informatika - gyakorlat">Irodai informatika - gyakorlat</option>
+                        <option value="Linux alapok">Linux alapok</option>
+                        <option value="Linux alapok - gyakorlat">Linux alapok - gyakorlat</option>
+                        <option value="Programozás" selected>Programozás</option>
+                        <option value="Programozás - gyakorlat">Programozás - gyakorlat</option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-success">Hozzáadás</button>
+                </div>
+            </div>
+        </form>
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -82,28 +105,6 @@ HTML;
                 </tbody>
             </table>
         </div>
-        <form action="action.php?add_student=true" method="post">
-            <div class="row g-3 align-items-center mt-3 ms-3">
-                <div class="col-auto">
-                    <input type="text" class="form-control" id="newstudent_name" name="newstudent_name" placeholder="Minta Áron">
-                </div>
-                <div class="col-auto">
-                    <select name="newstudent_class" id="newstudent_class" class="form-select">
-                        <option value="hálózatok I.">hálózatok I.</option>
-                        <option value="Hálózatok I. - gyakorlat">Hálózatok I. - gyakorlat</option>
-                        <option value="Irodai informatika">Irodai informatika</option>
-                        <option value="Irodai informatika - gyakorlat">Irodai informatika - gyakorlat</option>
-                        <option value="Linux alapok">Linux alapok</option>
-                        <option value="Linux alapok - gyakorlat">Linux alapok - gyakorlat</option>
-                        <option value="Programozás" selected>Programozás</option>
-                        <option value="Programozás - gyakorlat">Programozás - gyakorlat</option>
-                    </select>
-                </div>
-                <div class="col-auto">
-                    <button type="submit" class="btn btn-success">Hozzáadás</button>
-                </div>
-            </div>
-        </form>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>

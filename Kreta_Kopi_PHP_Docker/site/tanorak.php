@@ -50,6 +50,46 @@ include 'database.php';
 </nav>
 <div class="card mt-3">
     <div class="card-body">
+        <div class="mt-3 mb-4">
+            <p><b>Óra naplózása</b></p>
+            <form action="action.php?add_class=true" method="post">
+                <div class="row g-3 align-items-center mt-3 ms-3">
+                    <div class="col-auto">
+                        <input type="text" class="form-control" id="newclass_subject" name="newclass_subject" placeholder="Tanóra anyaga">
+                    </div>
+                    <div class="col-auto">
+                        <select name="newclass_class" id="newclass_class" class="form-select">
+                            <option value="hálózatok I.">hálózatok I.</option>
+                            <option value="Hálózatok I. - gyakorlat">Hálózatok I. - gyakorlat</option>
+                            <option value="Irodai informatika">Irodai informatika</option>
+                            <option value="Irodai informatika - gyakorlat">Irodai informatika - gyakorlat</option>
+                            <option value="Linux alapok">Linux alapok</option>
+                            <option value="Linux alapok - gyakorlat">Linux alapok - gyakorlat</option>
+                            <option value="Programozás" selected>Programozás</option>
+                            <option value="Programozás - gyakorlat">Programozás - gyakorlat</option>
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <select name="newclass_teacher" id="newclass_teacher" class="form-select">
+                            <?php
+                            $stmt = $conn->prepare("SELECT distinct `szaktanar` FROM `tanorak`");
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+                            while($row = $result->fetch_assoc()) {
+                                echo "<option value='{$row["szaktanar"]}'>{$row["szaktanar"]}</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <input type="date" class="form-control" id="newclass_date" name="newclass_date">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-success">Hozzáadás</button>
+                    </div>
+                </div>
+            </form>
+        </div>
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -78,7 +118,7 @@ include 'database.php';
                         <td class="align-middle">{$row["fakultacio"]}</td>
                         <td class="align-middle">{$row["tanora_anyaga"]}</td>
                         <td class="align-middle">{$row["szaktanar"]}</td>
-                        <td class="align-middle"><button class="btn btn-danger" onclick="javascript:window.location.href ='action.php?delete_student=true&student_id={$row["id"]}'">Törlés</button><br><button class="btn btn-warning mt-2" onclick="javascript:window.location.href ='diakmodositas.php?modify_student=true&student_id={$row["id"]}'">Módosítás</button></td>
+                        <td class="align-middle"><button class="btn btn-danger" onclick="javascript:window.location.href ='action.php?delete_class=true&class_id={$row["id"]}'">Törlés</button><br><button class="btn btn-warning mt-2" onclick="javascript:window.location.href ='tanoramodositas.php?class_id={$row["id"]}'">Módosítás</button></td>
                     </tr>
 HTML;
                 }
@@ -87,28 +127,6 @@ HTML;
                 </tbody>
             </table>
         </div>
-        <form action="action.php?add_student=true" method="post">
-            <div class="row g-3 align-items-center mt-3 ms-3">
-                <div class="col-auto">
-                    <input type="text" class="form-control" id="newstudent_name" name="newstudent_name" placeholder="Minta Áron">
-                </div>
-                <div class="col-auto">
-                    <select name="newstudent_class" id="newstudent_class" class="form-select">
-                        <option value="hálózatok I.">hálózatok I.</option>
-                        <option value="Hálózatok I. - gyakorlat">Hálózatok I. - gyakorlat</option>
-                        <option value="Irodai informatika">Irodai informatika</option>
-                        <option value="Irodai informatika - gyakorlat">Irodai informatika - gyakorlat</option>
-                        <option value="Linux alapok">Linux alapok</option>
-                        <option value="Linux alapok - gyakorlat">Linux alapok - gyakorlat</option>
-                        <option value="Programozás" selected>Programozás</option>
-                        <option value="Programozás - gyakorlat">Programozás - gyakorlat</option>
-                    </select>
-                </div>
-                <div class="col-auto">
-                    <button type="submit" class="btn btn-success">Hozzáadás</button>
-                </div>
-            </div>
-        </form>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>

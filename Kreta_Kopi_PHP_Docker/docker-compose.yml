@@ -3,14 +3,12 @@ version: '2'
 services: 
     apache:
         image: 'kretakopi:latest'
-        restart: always
         volumes: 
             - './site/:/var/www/html'
         ports:
             - '8080:80'
     mariadb:
         image: 'mariadb/server:10.3'
-        restart: always
         volumes:
             - './database/:/var/lib/mysql'
         ports:
