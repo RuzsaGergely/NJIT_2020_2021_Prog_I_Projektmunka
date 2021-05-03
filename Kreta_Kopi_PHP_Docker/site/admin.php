@@ -50,6 +50,7 @@ include 'database.php';
 </nav>
 <div class="card mt-3">
     <div class="card-body">
+        <a href="export.php" class="btn btn-success">Exportálás</a>
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
