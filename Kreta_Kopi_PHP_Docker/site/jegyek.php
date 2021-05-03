@@ -89,6 +89,35 @@ HTML;
             echo $html;
         }
         ?>
+        <form action="action.php?add_grade=true&redirect_stud=<?php echo $_GET["student_selector"];?>" method="post">
+            <div class="row g-3 align-items-center mt-3">
+                <div class="col-auto">
+                    <select name="grade_select" id="grade_select" class="form-select">
+                        <?php
+                        $grades = Array(1,2,3,4,5);
+                        echo "<option value='0'>-- Jegy --</option>";
+                        foreach ($grades as $selection) {
+                            echo '<option value="'.$selection.'">'.$selection.'</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <select name="percent_select" id="percent_select" class="form-select">
+                        <?php
+                        $grades = Array(50,100,150,200);
+                        echo "<option value='0'>-- Százalék --</option>";
+                        foreach ($grades as $selection) {
+                            echo '<option value="'.$selection.'">'.$selection.'%</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-success">Hozzáadás</button>
+                </div>
+            </div>
+        </form>
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -129,35 +158,7 @@ HTML;
                 </tbody>
             </table>
         </div>
-        <form action="action.php?add_grade=true&redirect_stud=<?php echo $_GET["student_selector"];?>" method="post">
-            <div class="row g-3 align-items-center mt-3 ms-3">
-                <div class="col-auto">
-                    <select name="grade_select" id="grade_select" class="form-select">
-                        <?php
-                        $grades = Array(1,2,3,4,5);
-                        echo "<option value='0'>-- Jegy --</option>";
-                        foreach ($grades as $selection) {
-                            echo '<option value="'.$selection.'">'.$selection.'</option>';
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class="col-auto">
-                    <select name="percent_select" id="percent_select" class="form-select">
-                        <?php
-                        $grades = Array(50,100,150,200);
-                        echo "<option value='0'>-- Százalék --</option>";
-                        foreach ($grades as $selection) {
-                            echo '<option value="'.$selection.'">'.$selection.'%</option>';
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class="col-auto">
-                    <button type="submit" class="btn btn-success">Hozzáadás</button>
-                </div>
-            </div>
-        </form>
+
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
