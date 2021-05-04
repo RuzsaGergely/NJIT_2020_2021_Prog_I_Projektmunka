@@ -45,10 +45,12 @@ if(isset($_GET["class_id"]) && $_SERVER["REQUEST_METHOD"] == "GET"){
         <div class="col-auto">
             <select name="modifyclass_class" id="modifyclass_class" class="form-select">
                 <?php
-                $grades = Array("hálózatok I.", "Hálózatok I. - gyakorlat", "Irodai informatika", "Irodai informatika - gyakorlat", "Linux alapok", "Linux alapok - gyakorlat", "Programozás", "Programozás - gyakorlat");
-                foreach ($grades as $selection) {
-                    $selected = ($class_data[2] == $selection) ? "selected" : "";
-                    echo '<option '.$selected.' value="'.$selection.'">'.$selection.'</option>';
+                $stmt = $conn->prepare("SELECT distinct `fakultacio` FROM `tanorak`");
+                $stmt->execute();
+                $result = $stmt->get_result();
+                while ($row = $result->fetch_assoc()) {
+                    $selected = ($class_data[2] == $row["fakultacio"]) ? "selected" : "";
+                    echo '<option '.$selected.' value="'.$row["fakultacio"].'">'.$row["fakultacio"].'</option>';
                 }
                 ?>
             </select>

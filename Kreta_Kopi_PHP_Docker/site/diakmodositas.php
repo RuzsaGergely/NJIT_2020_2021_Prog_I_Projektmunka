@@ -43,11 +43,14 @@ if($_GET["modify_student"] && isset($_GET["student_id"]) && $_SERVER["REQUEST_ME
         <div class="col-auto">
             <select name="modstudent_class" id="modstudent_class" class="form-select">
                 <?php
-                $grades = Array("hálózatok I.", "Hálózatok I. - gyakorlat", "Irodai informatika", "Irodai informatika - gyakorlat", "Linux alapok", "Linux alapok - gyakorlat", "Programozás", "Programozás - gyakorlat");
-                foreach ($grades as $selection) {
-                    $selected = ($student_data[2] == $selection) ? "selected" : "";
-                    echo '<option '.$selected.' value="'.$selection.'">'.$selection.'</option>';
+                $stmt = $conn->prepare("SELECT distinct `fakultacio` FROM `tanorak`");
+                $stmt->execute();
+                $result = $stmt->get_result();
+                while ($row = $result->fetch_assoc()) {
+                    $selected = ($student_data[2] == $row["fakultacio"]) ? "selected" : "";
+                    echo '<option '.$selected.' value="'.$row["fakultacio"].'">'.$row["fakultacio"].'</option>';
                 }
+
                 ?>
             </select>
         </div>

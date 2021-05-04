@@ -58,14 +58,14 @@ include 'database.php';
                 </div>
                 <div class="col-auto">
                     <select name="newstudent_class" id="newstudent_class" class="form-select">
-                        <option value="hálózatok I.">hálózatok I.</option>
-                        <option value="Hálózatok I. - gyakorlat">Hálózatok I. - gyakorlat</option>
-                        <option value="Irodai informatika">Irodai informatika</option>
-                        <option value="Irodai informatika - gyakorlat">Irodai informatika - gyakorlat</option>
-                        <option value="Linux alapok">Linux alapok</option>
-                        <option value="Linux alapok - gyakorlat">Linux alapok - gyakorlat</option>
-                        <option value="Programozás" selected>Programozás</option>
-                        <option value="Programozás - gyakorlat">Programozás - gyakorlat</option>
+                        <?php
+                        $stmt = $conn->prepare("SELECT distinct `fakultacio` FROM `tanorak`");
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+                        while($row = $result->fetch_assoc()) {
+                            echo "<option value='{$row["fakultacio"]}'>{$row["fakultacio"]}</option>";
+                        }
+                        ?>
                     </select>
                 </div>
                 <div class="col-auto">

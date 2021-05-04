@@ -10,7 +10,22 @@ header("Content-type: text/plain");
 header("Content-Disposition: attachment; filename=kreta_kopi_export.txt");
 
 print "# Kréta Kopi Export #\n\n";
-print "---------- Diákok átlaga és fakultációja ----------\n\n";
+print "---------- Osztályátlag ----------\n\n";
+$stmt = $conn->prepare("SELECT * FROM `jegyek`");
+$stmt->execute();
+$result = $stmt->get_result();
+
+$dividend = 0;
+$divisor = 0;
+
+while($row = $result->fetch_assoc()) {
+    $dividend += ($row["jegy"] * $row["szazalek"]);
+    $divisor += $row["szazalek"];
+}
+$osztavg = round($dividend / $divisor,2);
+print "Osztályátlag: {$osztavg}\n";
+
+print "\n---------- Diákok átlaga és fakultációja ----------\n\n";
 $stmt = $conn->prepare("SELECT `nev`, `id` FROM `diakok`");
 $stmt->execute();
 $result = $stmt->get_result();
@@ -38,13 +53,27 @@ while($row = $result->fetch_assoc()) {
     $avg = is_nan(round($dividend / $divisor,2)) ? "!NA!" : round($dividend / $divisor,2);
     print "{$row["nev"]}\t{$fak}\t{$avg}\n";
 }
-print "\n---------- Adminok listája ----------\n\n";
-$stmt = $conn->prepare("SELECT `felhasznalonev` FROM `felhasznalok`");
+
+print "\n---------- Fakultációk átlaga ----------\n\n";
+
+$stmt = $conn->prepare("SELECT distinct `fakultacio` FROM `tanorak`");
 $stmt->execute();
 $result = $stmt->get_result();
 while($row = $result->fetch_assoc()) {
-    print "{$row["felhasznalonev"]}\n";
+    $stmt2 = $conn->prepare("SELECT jegyek.jegy, jegyek.szazalek, jegyek.id FROM jegyek INNER JOIN diakok ON diakok.id = jegyek.diak_id WHERE diakok.fakultacio=?");
+    $stmt2->bind_param("s", $row["fakultacio"]);
+    $stmt2->execute();
+    $result2 = $stmt2->get_result();
+    $dividend = 0;
+    $divisor = 0;
+    while($row2 = $result2->fetch_assoc()) {
+        $dividend += ($row2["jegy"] * $row2["szazalek"]);
+        $divisor += $row2["szazalek"];
+    }
+    $avg = round($dividend / $divisor,2);
+    print "{$row["fakultacio"]}\t{$avg}\n";
 }
+
 print "\n---------- Diákok jegyei ----------\n\n";
 $stmt = $conn->prepare("SELECT `nev`, `id` FROM `diakok`");
 $stmt->execute();
@@ -66,4 +95,12 @@ $stmt->execute();
 $result = $stmt->get_result();
 while($row = $result->fetch_assoc()) {
     print "{$row["datum"]}\t{$row["nap"]}\t{$row["fakultacio"]}\t{$row["tanora_anyaga"]}\t{$row["szaktanar"]}\n";
+}
+
+print "\n---------- Adminok listája ----------\n\n";
+$stmt = $conn->prepare("SELECT `felhasznalonev` FROM `felhasznalok`");
+$stmt->execute();
+$result = $stmt->get_result();
+while($row = $result->fetch_assoc()) {
+    print "{$row["felhasznalonev"]}\n";
 }
