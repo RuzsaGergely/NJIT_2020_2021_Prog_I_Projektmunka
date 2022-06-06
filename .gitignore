@@ -1,11 +1,2 @@
-
-Kreta_kopi/Kreta_kopi/obj/Debug/Kreta_kopi.pdb
-Kreta_kopi/Kreta_kopi/obj/Debug/Kreta_kopi.dll
-Kreta_kopi/Kreta_kopi/obj/Debug/Kreta_kopi.csprojAssemblyReference.cache
-Kreta_kopi/Kreta_kopi/obj/Debug/Kreta_kopi.csproj.FileListAbsolute.txt
-Kreta_kopi/Kreta_kopi/obj/Debug/Kreta_kopi.csproj.CoreCompileInputs.cache
-Kreta_kopi/Kreta_kopi/bin/Kreta_kopi.pdb
-Kreta_kopi/Kreta_kopi/bin/Kreta_kopi.dll
-Kreta_kopi/.vs/Kreta_kopi/v16/.suo
-Kreta_kopi/.vs/Kreta_kopi/config/applicationhost.config
-Kreta_Kopi_PHP_Docker/database
+.gitignore
+.idea/
